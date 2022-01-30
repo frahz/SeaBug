@@ -18,9 +18,8 @@ void setup()
 
 void loop()
 {
-    delay(500);
-
-    // go_sleep();
+    delay(5000);
+    go_sleep();
 }
 
 void go_sleep()
