@@ -1,8 +1,12 @@
 #include <Arduino.h>
+#include <Servo.h>
 #include <avr/sleep.h>
 
 #define button 3
 #define led1 5
+
+Servo motor;
+int pos = 0;
 
 void wakeUp();
 void go_sleep();
@@ -11,14 +15,18 @@ void setup()
 {
     Serial.begin(9600);
     pinMode(led1, OUTPUT);
-    pinMode(button, INPUT);
+    pinMode(button, INPUT_PULLUP);
+
+    motor.attach(9);
+    motor.write(0);
 
     digitalWrite(led1, HIGH);
 }
 
 void loop()
 {
-    delay(5000);
+    delay(500);
+
     go_sleep();
 }
 
@@ -36,6 +44,11 @@ void go_sleep()
 void wakeUp()
 {
     Serial.println("Interrupt activated");
-    sleep_disable();    // disable sleep mode
+    Serial.println(pos);
+    motor.write(pos % 180); // tell servo to go to position in variable 'pos'
+    pos += 30;
+
+    sleep_disable(); // disable sleep mode
+
     detachInterrupt(1); // removes the interrupt from pin d3
 }
