@@ -6,7 +6,7 @@
 #define led1 5
 
 Servo motor;
-int pos = 0;
+int pos = 90;
 
 void wakeUp();
 void go_sleep();
@@ -17,16 +17,15 @@ void setup()
     pinMode(led1, OUTPUT);
     pinMode(button, INPUT_PULLUP);
 
-    motor.attach(9);
     motor.write(0);
+    motor.attach(9);
 
     digitalWrite(led1, HIGH);
 }
 
 void loop()
 {
-    delay(500);
-
+    delay(2000);
     go_sleep();
 }
 
@@ -45,8 +44,7 @@ void wakeUp()
 {
     Serial.println("Interrupt activated");
     Serial.println(pos);
-    motor.write(pos % 180); // tell servo to go to position in variable 'pos'
-    pos += 30;
+    motor.write(pos); // tell servo to go to position in variable 'pos'
 
     sleep_disable(); // disable sleep mode
 
