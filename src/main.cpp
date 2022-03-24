@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Servo.h>
 #include <avr/sleep.h>
+#include "LowPower.h"
 
 #define button 3
 #define led1 5
@@ -13,7 +14,7 @@ void go_sleep();
 
 void setup()
 {
-    Serial.begin(9600);
+    // Serial.begin(9600);
     pinMode(led1, OUTPUT);
     pinMode(button, INPUT_PULLUP);
 
@@ -31,19 +32,14 @@ void loop()
 
 void go_sleep()
 {
-    sleep_enable();                      // enable sleep
-    attachInterrupt(1, wakeUp, LOW);     // attach interrupt to pin d3
-    set_sleep_mode(SLEEP_MODE_PWR_DOWN); // set sleep mode to full sleep
-    digitalWrite(led1, LOW);             // turn led off
-    delay(1000);                         // wait second before going to sleep
-    sleep_cpu();                         // activate sleep mode
-    Serial.println("Woke up!");          // execute after interrupt
-    digitalWrite(led1, HIGH);            // turn led on
+    attachInterrupt(1, wakeUp, LOW); // attach interrupt to pin d3
+    digitalWrite(led1, LOW);         // turn led off
+    LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
+    // Serial.println("Woke up!"); // execute after interrupt
+    digitalWrite(led1, HIGH); // turn led on
 }
 void wakeUp()
 {
-    Serial.println("Interrupt activated");
-    Serial.println(pos);
     motor.write(pos); // tell servo to go to position in variable 'pos'
 
     sleep_disable(); // disable sleep mode
