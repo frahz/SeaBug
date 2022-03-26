@@ -6,7 +6,9 @@
 #define button 3
 #define led1 5
 
-Servo motor;
+// Servo motors for opening the buoy containers
+Servo motor_1;
+Servo motor_2;
 int pos = 90;
 
 void wakeUp();
@@ -18,8 +20,11 @@ void setup()
     pinMode(led1, OUTPUT);
     pinMode(button, INPUT_PULLUP);
 
-    motor.write(0);
-    motor.attach(9);
+    motor_1.write(0);
+    motor_1.attach(9);
+
+    motor_2.write(0);
+    motor_2.attach(10);
 
     digitalWrite(led1, HIGH);
 }
@@ -40,7 +45,9 @@ void go_sleep()
 }
 void wakeUp()
 {
-    motor.write(pos); // tell servo to go to position in variable 'pos'
+    // tell servo to go to position in variable 'pos'
+    motor_1.write(pos);
+    motor_2.write(pos);
 
     sleep_disable(); // disable sleep mode
 
