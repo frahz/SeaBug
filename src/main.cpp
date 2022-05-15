@@ -12,7 +12,7 @@ Servo motor_2;
 const int init_pos = 0;
 const int final_pos = 90;
 
-void wakeUp();
+void wake_up();
 void go_sleep();
 
 void setup()
@@ -38,13 +38,13 @@ void loop()
 
 void go_sleep()
 {
-    attachInterrupt(1, wakeUp, LOW); // attach interrupt to pin d3
-    digitalWrite(led1, LOW);         // turn led off
+    attachInterrupt(1, wake_up, LOW); // attach interrupt to pin d3
+    digitalWrite(led1, LOW);          // turn led off
     LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
     // Serial.println("Woke up!"); // execute after interrupt
     digitalWrite(led1, HIGH); // turn led on
 }
-void wakeUp()
+void wake_up()
 {
     // tell servo to go to position in variable 'pos'
     motor_1.write(final_pos);
