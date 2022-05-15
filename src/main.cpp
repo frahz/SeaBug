@@ -9,7 +9,8 @@
 // Servo motors for opening the buoy containers
 Servo motor_1;
 Servo motor_2;
-int pos = 90;
+const int init_pos = 0;
+const int final_pos = 90;
 
 void wakeUp();
 void go_sleep();
@@ -20,10 +21,10 @@ void setup()
     pinMode(led1, OUTPUT);
     pinMode(button, INPUT_PULLUP);
 
-    motor_1.write(0);
+    motor_1.write(init_pos);
     motor_1.attach(9);
 
-    motor_2.write(0);
+    motor_2.write(init_pos);
     motor_2.attach(10);
 
     digitalWrite(led1, HIGH);
@@ -46,8 +47,8 @@ void go_sleep()
 void wakeUp()
 {
     // tell servo to go to position in variable 'pos'
-    motor_1.write(pos);
-    motor_2.write(pos);
+    motor_1.write(final_pos);
+    motor_2.write(final_pos);
 
     sleep_disable(); // disable sleep mode
 
