@@ -98,10 +98,10 @@ This function is the one that attaches an interrupt to pin `3` that calls the fu
 ```cpp
 void go_sleep()
 {
-    attachInterrupt(1, wake_up, LOW); // attach interrupt to pin d3
-    digitalWrite(led1, LOW);          // turn led off
+    attachInterrupt(1, wake_up, LOW);
+    digitalWrite(led1, LOW);
     LowPower.powerDown(SLEEP_FOREVER, ADC_OFF, BOD_OFF);
-    digitalWrite(led1, HIGH); // turn led on
+    digitalWrite(led1, HIGH);
 }
 ```
 
